@@ -9,6 +9,7 @@ import { Constants } from 'expo'
 import { purple, white } from './utils/colors'
 import DeckList from './components/DeckLists'
 import NewDeck from './components/NewDeck'
+import DeckDetail from './components/DeckDetail'
 
 const CustomStatusBar = ({backgroundColor, ...props}) => (
   <View style={{backgroundColor, height: Constants.statusBarHeight}}>
@@ -21,7 +22,32 @@ const Tabs = TabNavigator({
     screen: DeckList
   },
   NewDeck: {
-    screen: NewDeck
+    screen: NewDeck,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      }
+    }
+  }
+})
+
+const MainNavigator = StackNavigator({
+  Home: {
+    screen: Tabs,
+    navigationOptions: {
+      title: 'Homie',
+    }
+  },
+  DeckDetail: {
+    screen: DeckDetail,
+    navigationOptions: {
+      title: 'Detail',
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      }
+    }    
   }
 })
 
@@ -30,7 +56,7 @@ export default class App extends Component {
     return (
         <View style={{flex: 1}}>
           <CustomStatusBar backgroundColor={purple} barStyle="light-content" />
-          <Tabs />
+          <MainNavigator />
         </View>
     )
   }

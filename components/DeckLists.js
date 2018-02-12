@@ -1,11 +1,13 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 
-const DeckLists = () => {
+const DeckLists = (props) => {
   return (
     <View>
       <Text>All decks</Text>
-      <Text>All decks</Text>
+      <TouchableOpacity onPress={() => props.navigation.navigate('DeckDetail')}>
+        <Text>Deck</Text>
+      </TouchableOpacity>
     </View>
   );
 }
