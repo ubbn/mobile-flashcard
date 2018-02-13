@@ -6,10 +6,13 @@ import { TabNavigator, StackNavigator } from 'react-navigation'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Constants } from 'expo'
 
+import reducer from './reducers'
 import { purple, white } from './utils/colors'
 import DeckList from './components/DeckLists'
 import NewDeck from './components/NewDeck'
 import DeckDetail from './components/DeckDetail'
+import Quiz from './components/Quiz'
+import NewCard from './components/NewCard'
 
 const CustomStatusBar = ({backgroundColor, ...props}) => (
   <View style={{backgroundColor, height: Constants.statusBarHeight}}>
@@ -30,14 +33,16 @@ const Tabs = TabNavigator({
       }
     }
   }
+},
+{
+  navigationOptions: {
+    header: null
+  }
 })
 
 const MainNavigator = StackNavigator({
   Home: {
-    screen: Tabs,
-    navigationOptions: {
-      title: 'Homie',
-    }
+    screen: Tabs
   },
   DeckDetail: {
     screen: DeckDetail,
@@ -48,16 +53,38 @@ const MainNavigator = StackNavigator({
         backgroundColor: purple,
       }
     }    
-  }
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      title: 'Quiz time',
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      }
+    }    
+  },
+  NewCard: {
+    screen: NewCard,
+    navigationOptions: {
+      title: 'Add a new card',
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      }
+    }    
+  }  
 })
 
 export default class App extends Component {
   render() {
     return (
+      <Provider store={createStore(reducer)}>
         <View style={{flex: 1}}>
           <CustomStatusBar backgroundColor={purple} barStyle="light-content" />
           <MainNavigator />
         </View>
+      </Provider>
     )
   }
 }
