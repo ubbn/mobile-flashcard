@@ -1,32 +1,58 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
+
+import CustomButton from './UI/CustomButton'
 
 class DeckDetail extends React.Component {
   render(){
     
     return (
-      <View>
-        <Text>{this.props.title}</Text>
+      <View style={styles.container}>
+        <Text style={styles.title}>{this.props.title}</Text>
+        <Text style={styles.subTitle}>{this.props.cards} cards</Text>
 
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('Quiz', {title: this.props.title})}>
-          <Text>Start Quiz</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('NewCard', {title: this.props.title})}>
-          <Text>Add card</Text>
-        </TouchableOpacity>        
+        <CustomButton text={'Start Quiz'}
+          onPress={() => this.props.navigation.navigate('Quiz', {title: this.props.title})}
+          styleBtn={styles.button}
+        />
+
+        <CustomButton text={'Add card'} 
+          onPress={() => this.props.navigation.navigate('NewCard', {title: this.props.title})}
+          styleBtn={[styles.button, {backgroundColor: 'black'}]}
+        />
       </View>
     )
   }
 }
 
-const mapStateToProps = (state, {navigation}) => {
-  const { title } = navigation.state.params
-
-  return {
-    title,
-    decks: state.decks
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 45,
+    marginTop: 40
+  },
+  subTitle: {
+    fontSize: 20,
+    marginBottom: 40
+  },
+  button: {
+    width: 200,
+    margin: 10,
   }
-}
+})
 
-export default connect(mapStateToProps)(DeckDetail)
+export default connect(
+  (state, { navigation }) => {
+    const { title, cards } = navigation.state.params
+  
+    return {
+      title,
+      cards,
+      decks: state.decks
+    }
+  }  
+)(DeckDetail)

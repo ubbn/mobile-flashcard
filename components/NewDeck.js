@@ -1,9 +1,11 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, TextInput } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 
 import { addDeck, retreiveDecks } from '../actions'
 import * as Api from '../utils/api'
+import TextBox from './UI/TextBox'
+import CustomButton from './UI/CustomButton'
 
 class NewDeck extends React.Component {
   state = {
@@ -11,45 +13,44 @@ class NewDeck extends React.Component {
   }
 
   addNew = () => {
-    const num = Math.random().toString(36)
-    const obj = {key: num, entry: {title: num, questions: []}}
+    if (this.state.text.length === 0)
+      return
+
+    const title = this.state.text
+    const obj = {key: title, entry: {title, questions: []}}
     Api.addDeck(obj)
 
     this.props.dispatch(addDeck(obj))
-    console.log('addingnew')
 
     Api.retrieveDecks().then(decks => {
       this.props.dispatch(retreiveDecks(decks))
-      console.log(decks)
     })    
   }
 
   render(){  
     return (
-      <View>
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.setState({text})}
-          value={this.state.text}
+      <View style={styles.container}>
+        <TextBox 
+          caption={'Enter deck name'} 
+          onTextChanged={text => this.setState({text})}
+          style={{marginTop: 40}}
         />
-        <TouchableOpacity onPress={this.addNew}>
-          <Text>ADDXX</Text>
-        </TouchableOpacity>      
+        <CustomButton text={'submit'} onPress={this.addNew}/>
       </View>
     );
   }
 }
 
-function mapStateToProps(state){
-  return {
-    ...state
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center'
   }
-}
+})
 
-// function mapDispatchToProps(dispatch){
-//   return {
-//     addNew: deck => dispatch(addDeck(deck))
-//   }
-// }
 
-export default connect(mapStateToProps)(NewDeck)
+export default connect(
+  state => ({
+    ...state
+  })
+)(NewDeck)

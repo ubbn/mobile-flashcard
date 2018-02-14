@@ -1,18 +1,20 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 
-import { addDeck, retreiveDecks } from '../actions'
+import { retreiveDecks } from '../actions'
 import * as Api from '../utils/api'
+import TextBox from './UI/TextBox'
+import CustomButton from './UI/CustomButton'
 
 class NewCard extends React.Component {
-  addNew = () => {
-    const obj = {
-      question: 'Hello?', 
-      answer: 'and you'
-    }
+  state = {
+    question: '',
+    answer: ''
+  }
 
-    Api.addCard(this.props.title, obj)
+  addNew = () => {
+    Api.addCard(this.props.title, this.state)
     Api.retrieveDecks().then(decks => {
       this.props.dispatch(retreiveDecks(decks))
     })
@@ -20,29 +22,40 @@ class NewCard extends React.Component {
 
   render(){  
     return (
-      <View>
-        <Text>New card on {this.props.title}</Text>
-        <TouchableOpacity onPress={this.addNew}>
-          <Text>Add card</Text>
-        </TouchableOpacity>      
+      <View style={styles.container}>
+        <TextBox 
+          caption={'Question'} 
+          style={styles.textBox} 
+          onTextChanged={question => this.setState({question})}
+        />
+        <TextBox 
+          caption={'Answer'} 
+          style={styles.textBox}
+          onTextChanged={answer => this.setState({answer})}
+        />
+        <CustomButton onPress={this.addNew} text={'Add'}/>
       </View>
     );
   }
 }
 
-function mapStateToProps(state, { navigation}){
-  const { title } = navigation.state.params
-
-  return {
-    title,
-    decks: state.decks
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center'
+  },
+  textBox: {
+    width: 250
   }
-}
+})
 
-// function mapDispatchToProps(dispatch){
-//   return {
-//     addNew: deck => dispatch(addDeck(deck))
-//   }
-// }
-
-export default connect(mapStateToProps)(NewCard)
+export default connect(
+  (state, { navigation}) => {
+    const { title } = navigation.state.params
+  
+    return {
+      title,
+      decks: state.decks
+    }
+  }
+)(NewCard)

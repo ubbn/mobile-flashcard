@@ -1,7 +1,7 @@
 // Theme colors
 
 export const purple = '#292477'
-export const gray = '#757575'
+export const gray = 'gray'
 export const white = '#fff'
 export const black = '#000'
 export const red = '#b71845'

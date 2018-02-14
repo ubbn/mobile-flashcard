@@ -5,8 +5,10 @@ const DECK_STORAGE_KEY = 'DECK_STORAGE_KEY'
 export function retrieveDecks() {
   return AsyncStorage.getItem(DECK_STORAGE_KEY).then(
     res => {
-      data = JSON.parse(res)
-      return Object.values(data)
+      const data = JSON.parse(res)
+      if (typeof data === 'object' && data !== null)
+        return Object.values(data) 
+      return []
     })
 }
 
@@ -26,8 +28,6 @@ export function addCard(title, card) {
         ...deck,
         questions: deck.questions.concat(card)
       }
-
-      console.log(deck)
       data = {
         ...data,
         [title]: deck
