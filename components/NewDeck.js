@@ -24,6 +24,8 @@ class NewDeck extends React.Component {
     Api.addDeck(newDeck)
     this.props.dispatch(addDeck(newDeck))
     this.input.clear()
+
+    this.props.navigation.navigate('DeckDetail', { title: this.state.text })
   }
 
   render(){  
