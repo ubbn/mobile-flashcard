@@ -47,7 +47,6 @@ const MainNavigator = StackNavigator({
   DeckDetail: {
     screen: DeckDetail,
     navigationOptions: {
-      title: 'Detail',
       headerTintColor: white,
       headerStyle: {
         backgroundColor: gray,
@@ -57,22 +56,23 @@ const MainNavigator = StackNavigator({
   Quiz: {
     screen: Quiz,
     navigationOptions: {
+      title: 'Quiz',
       headerTintColor: white,
       headerStyle: {
         backgroundColor: gray,
       }
-    }    
+    }
   },
   NewCard: {
     screen: NewCard,
     navigationOptions: {
-      title: 'Add a new card',
+      title: 'Add card',
       headerTintColor: white,
       headerStyle: {
         backgroundColor: gray,
       }
-    }    
-  }  
+    }
+  }
 })
 
 export default class App extends Component {

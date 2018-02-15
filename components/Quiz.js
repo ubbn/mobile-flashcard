@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 
 import { gray } from '../utils/colors'
@@ -7,14 +8,6 @@ import CustomButton from './UI/CustomButton'
 import * as Api from '../utils/api'
 
 class Quiz extends React.Component {
-  static navigationOptions = ({navigation}) => {
-    const { title } = navigation.state.params
-
-    return {
-      title
-    }
-  }
-
   state = {
     currentQuestion: 0,
     score: 0,
@@ -27,7 +20,7 @@ class Quiz extends React.Component {
 
   goNext = (score) => {
     this.setState(state => ({
-      currentQuestion: state.currentQuestion+1,
+      currentQuestion: state.currentQuestion + 1,
       showAnswer: false,
       score: state.score + score
     }))
@@ -43,13 +36,21 @@ class Quiz extends React.Component {
         <View>
           <Text>First add some cards to the deck</Text>
         </View>
-      )      
+      )
     }
 
     if (currentQuestion >= questionsCount){
       return (
         <View style={styles.container}>
           <Text style={styles.answer}>{score} correct out of {questionsCount}</Text>
+          <CustomButton 
+            onPress={() => { this.setState({score: 0, currentQuestion: 0})}} 
+            text={'Restart quiz'} styleBtn={[styles.button, {backgroundColor: 'black'}]}
+          />
+          <CustomButton 
+            onPress={() => this.props.navigation.goBack()} 
+            text={'Back to Deck'} styleBtn={styles.button}
+          />          
         </View>
       )
     }
@@ -57,7 +58,7 @@ class Quiz extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.questionCount}>
-          {currentQuestion+1}/{questionsCount}
+          {questionsCount - currentQuestion}/{questionsCount}
         </Text>
         <Text style={styles.question}>
           {questions[currentQuestion].question}
@@ -67,10 +68,14 @@ class Quiz extends React.Component {
               <Text style={styles.answer}>
                 {questions[currentQuestion].answer}
               </Text>            
-              <CustomButton onPress={() => this.goNext(1)} key={1}
-                text={'Correct'} styleBtn={[styles.button, {backgroundColor: 'black'}]}/>
-              <CustomButton onPress={() => this.goNext(0)} key={0}
-                text={'Incorrect'} styleBtn={styles.button}/>
+              <CustomButton 
+                onPress={() => this.goNext(1)} 
+                text={'Correct'} styleBtn={[styles.button, {backgroundColor: 'black'}]}
+              />
+              <CustomButton 
+                onPress={() => this.goNext(0)} 
+                text={'Incorrect'} styleBtn={styles.button}
+              />
             </View>
           : <CustomButton onPress={this.showAnswer} text={'Show answer'}/>          
         }
@@ -104,13 +109,14 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect((state, {navigation}) => {
-  const { title } = navigation.state.params
-  const deck = state.decks.find(x => x.title === title)
+export default connect(
+  (state, {navigation}) => {
+    const { title } = navigation.state.params
+    const deck = state.decks.find(x => x.title === title)
 
-  return {
-    title,
-    questions: !!deck ? deck.questions : [],
-    decks: state.decks
+    return {
+      title,
+      questions: !!deck ? deck.questions : []
+    }
   }
-})(Quiz)
+)(Quiz)

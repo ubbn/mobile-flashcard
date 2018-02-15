@@ -5,12 +5,20 @@ import { connect } from 'react-redux'
 import CustomButton from './UI/CustomButton'
 
 class DeckDetail extends React.Component {
+  static navigationOptions = ({navigation}) => {
+    const { title } = navigation.state.params
+
+    return {
+      title
+    }
+  }
+  
   render(){
     
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{this.props.title}</Text>
-        <Text style={styles.subTitle}>{this.props.cards} cards</Text>
+        <Text style={styles.subTitle}>{this.props.cardsCount} cards</Text>
 
         <CustomButton text={'Start Quiz'}
           onPress={() => this.props.navigation.navigate('Quiz', {title: this.props.title})}
@@ -47,11 +55,13 @@ const styles = StyleSheet.create({
 
 export default connect(
   (state, { navigation }) => {
-    const { title, cards } = navigation.state.params
+    let { title } = navigation.state.params
+    let deck = state.decks.find(x => x.title === title)
+    let cardsCount = !!deck ? deck.questions.length : 0
   
     return {
       title,
-      cards,
+      cardsCount,
       decks: state.decks
     }
   }  

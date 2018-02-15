@@ -15,10 +15,10 @@ class DeckLists extends React.Component {
 
   renderDeck = ({ item } ) => {
     const { title, questions } = item
-    const cards = questions.length
+    const cards = !!questions ? questions.length : []
     return (
       <TouchableOpacity style={styles.deck}
-        onPress={() => this.props.navigation.navigate('DeckDetail', {title, cards})}>
+        onPress={() => this.props.navigation.navigate('DeckDetail', { title })}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.subTitle}>{cards} cards</Text>
       </TouchableOpacity>

@@ -16,26 +16,24 @@ class NewDeck extends React.Component {
     if (this.state.text.length === 0)
       return
 
-    const title = this.state.text
-    const obj = {key: title, entry: {title, questions: []}}
-    Api.addDeck(obj)
+    const newDeck = { 
+      title: this.state.text, 
+      questions: [] 
+    }
 
-    this.props.dispatch(addDeck(obj))
-
-    Api.retrieveDecks().then(decks => {
-      this.props.dispatch(retreiveDecks(decks))
-    })    
+    Api.addDeck(newDeck)
+    this.props.dispatch(addDeck(newDeck))
   }
 
   render(){  
     return (
       <View style={styles.container}>
         <TextBox 
-          caption={'Enter deck name'} 
+          caption={'Enter title'} 
           onTextChanged={text => this.setState({text})}
           style={{marginTop: 40}}
         />
-        <CustomButton text={'submit'} onPress={this.addNew}/>
+        <CustomButton text={'create deck'} onPress={this.addNew}/>
       </View>
     );
   }
@@ -47,7 +45,6 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   }
 })
-
 
 export default connect(
   state => ({

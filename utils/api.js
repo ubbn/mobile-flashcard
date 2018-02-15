@@ -3,18 +3,18 @@ import { AsyncStorage } from 'react-native'
 const DECK_STORAGE_KEY = 'DECK_STORAGE_KEY'
 
 export function retrieveDecks() {
-  return AsyncStorage.getItem(DECK_STORAGE_KEY).then(
-    res => {
-      const data = JSON.parse(res)
+  return AsyncStorage.getItem(DECK_STORAGE_KEY)
+    .then(JSON.parse)
+    .then(data => {
       if (typeof data === 'object' && data !== null)
         return Object.values(data) 
       return []
     })
 }
 
-export function addDeck({key, entry}) {
+export function addDeck(deck) {
   return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
-    [key]: entry
+    [deck.title]: deck
   }))
 }
 
@@ -35,14 +35,4 @@ export function addCard(title, card) {
       
       AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(data))
     })  
-}
-
-export function removeDeck(key) {
-  return AsyncStorage.getItem(DECK_STORAGE_KEY)
-    .then(results => {
-      data = JSON.parse(results)
-      data[key] = undefined
-      delete data[key]
-      AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(data))
-    })
 }
