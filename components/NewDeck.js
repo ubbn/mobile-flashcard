@@ -23,6 +23,7 @@ class NewDeck extends React.Component {
 
     Api.addDeck(newDeck)
     this.props.dispatch(addDeck(newDeck))
+    this.input.clear()
   }
 
   render(){  
@@ -32,6 +33,7 @@ class NewDeck extends React.Component {
           caption={'Enter title'} 
           onTextChanged={text => this.setState({text})}
           style={{marginTop: 40}}
+          inputRef={ref => this.input = ref}
         />
         <CustomButton text={'create deck'} onPress={this.addNew}/>
       </View>

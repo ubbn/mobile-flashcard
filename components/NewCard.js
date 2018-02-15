@@ -20,6 +20,9 @@ class NewCard extends React.Component {
 
     Api.addCard(this.props.title, this.state)
     this.props.dispatch(addCard(this.props.title, this.state))
+
+    this.inputAnswer.clear()
+    this.inputQuestion.clear()
   }
 
   render(){  
@@ -29,11 +32,13 @@ class NewCard extends React.Component {
           caption={'Enter question'} 
           style={styles.textBox} 
           onTextChanged={question => this.setState({question})}
+          inputRef={ref => this.inputQuestion = ref}
         />
         <TextBox 
           caption={'Enter answer'} 
           style={styles.textBox}
           onTextChanged={answer => this.setState({answer})}
+          inputRef={ref => this.inputAnswer = ref}
         />
         <CustomButton onPress={this.addNew} text={'Add card'}/>
       </View>

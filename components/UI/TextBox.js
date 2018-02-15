@@ -23,6 +23,7 @@ export default class TextBox extends React.Component {
           onChangeText={(text) => this.textChanged(text)}
           value={this.state.text}
           underlineColorAndroid='transparent'
+          ref={this.props.inputRef}
         />
         <Text style={styles.caption}>{this.props.caption}</Text>
       </View>
