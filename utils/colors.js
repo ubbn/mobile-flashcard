@@ -1,11 +1,5 @@
-// Theme colors
-
-export const purple = '#292477'
-export const gray = 'gray'
-export const white = '#fff'
-export const black = '#000'
-export const red = '#b71845'
-export const orange = '#f26f28'
-export const blue = '#4e4cb8'
-export const lightPurp = '#7c53c3'
-export const pink = '#b93fb3'
+// Color collections
+export const lightBlue  = '#29B6F6'
+export const blue       = '#2196F3'
+export const darkBlue   = '#01579B'
+export const white      = '#ffff'

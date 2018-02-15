@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, TextInput, StyleSheet} from 'react-native'
 
-import { gray } from '../../utils/colors'
+import { blue } from '../../utils/colors'
 
 export default class TextBox extends React.Component {
   state = {
@@ -39,12 +39,12 @@ const styles = StyleSheet.create({
   caption: {
     fontSize: 11,
     marginTop: 0,
-    color: gray
+    color: blue
   },
   textbox: {
     height: 30, 
     width: 220, 
     borderBottomWidth: 1,
-    borderColor: gray,
+    borderColor: blue,
   }
 })

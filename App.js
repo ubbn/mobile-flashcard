@@ -7,7 +7,7 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { Constants } from 'expo'
 
 import reducer from './reducers'
-import { purple, white, gray } from './utils/colors'
+import { blue, white, darkBlue } from './utils/colors'
 import DeckList from './components/DeckLists'
 import NewDeck from './components/NewDeck'
 import DeckDetail from './components/DeckDetail'
@@ -27,10 +27,7 @@ const Tabs = TabNavigator({
   NewDeck: {
     screen: NewDeck,
     navigationOptions: {
-      headerTintColor: white,
-      headerStyle: {
-        backgroundColor: gray,
-      }
+      title: 'Add Deck',
     }
   }
 },
@@ -49,7 +46,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: gray,
+        backgroundColor: blue,
       }
     }    
   },
@@ -59,7 +56,7 @@ const MainNavigator = StackNavigator({
       title: 'Quiz',
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: gray,
+        backgroundColor: blue,
       }
     }
   },
@@ -69,7 +66,7 @@ const MainNavigator = StackNavigator({
       title: 'Add card',
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: gray,
+        backgroundColor: blue,
       }
     }
   }
@@ -80,7 +77,7 @@ export default class App extends Component {
     return (
       <Provider store={createStore(reducer)}>
         <View style={{flex: 1}}>
-          <CustomStatusBar backgroundColor={gray} barStyle="light-content" />
+          <CustomStatusBar backgroundColor={darkBlue} barStyle="light-content" />
           <MainNavigator />
         </View>
       </Provider>

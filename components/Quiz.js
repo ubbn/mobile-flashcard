@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 
-import { gray } from '../utils/colors'
+import { blue, white } from '../utils/colors'
 import CustomButton from './UI/CustomButton'
 import * as Api from '../utils/api'
 
@@ -45,11 +45,12 @@ class Quiz extends React.Component {
           <Text style={styles.answer}>{score} correct out of {questionsCount}</Text>
           <CustomButton 
             onPress={() => { this.setState({score: 0, currentQuestion: 0})}} 
-            text={'Restart quiz'} styleBtn={[styles.button, {backgroundColor: 'black'}]}
+            text={'Restart quiz'} styleBtn={styles.button}
           />
           <CustomButton 
             onPress={() => this.props.navigation.goBack()} 
-            text={'Back to Deck'} styleBtn={styles.button}
+            text={'Back to Deck'} styleTxt={{color: blue}}
+            styleBtn={[styles.button, styles.specialButton]}
           />          
         </View>
       )
@@ -70,11 +71,12 @@ class Quiz extends React.Component {
               </Text>            
               <CustomButton 
                 onPress={() => this.goNext(1)} 
-                text={'Correct'} styleBtn={[styles.button, {backgroundColor: 'black'}]}
+                text={'Correct'} styleBtn={styles.button}
               />
               <CustomButton 
                 onPress={() => this.goNext(0)} 
-                text={'Incorrect'} styleBtn={styles.button}
+                text={'Incorrect'} styleTxt={{color: blue}}
+                styleBtn={[styles.button, styles.specialButton]}
               />
             </View>
           : <CustomButton onPress={this.showAnswer} text={'Show answer'}/>          
@@ -100,13 +102,18 @@ const styles = StyleSheet.create({
   },
   answer: {
     fontSize: 35,
-    color: gray,
+    color: blue,
     paddingBottom: 30
   },
   button: {
     margin: 10,
-    width: 200
-  }
+    width: 210
+  },
+  specialButton: {
+    backgroundColor: white,
+    borderWidth: 2,
+    borderColor: blue
+  }  
 })
 
 export default connect(

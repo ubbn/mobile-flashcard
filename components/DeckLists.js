@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native
 import { connect } from 'react-redux'
 
 import { retreiveDecks } from '../actions'
-import { gray } from '../utils/colors'
+import { lightBlue, darkBlue, white } from '../utils/colors'
 import * as Api from '../utils/api'
 
 class DeckLists extends React.Component {
@@ -48,7 +48,7 @@ class DeckLists extends React.Component {
 
 const styles = StyleSheet.create({
   deck: {
-    backgroundColor: 'white',
+    backgroundColor: white,
     borderRadius: 8,
     padding: 20,
     margin: 15,
@@ -57,13 +57,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 26,
+    fontSize: 30,
+    color: darkBlue,
     paddingTop: 20,
   },
   subTitle: {
+    fontSize: 17,
+    color: lightBlue,
     paddingBottom: 20,
-    fontSize: 14,
-    color: gray
   }
 })
 

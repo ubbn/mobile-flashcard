@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
-import { gray } from '../../utils/colors'
+import { blue, white } from '../../utils/colors'
 
 export default CustomButton = ({text, onPress, styleBtn={}, styleTxt={}}) => {
   text = typeof text === 'string' ? text.toUpperCase() : 'SUBMIT'
@@ -17,7 +17,7 @@ export default CustomButton = ({text, onPress, styleBtn={}, styleTxt={}}) => {
 
 const styles = StyleSheet.create({
   AndroidSubmitBtn: {
-    backgroundColor: gray,
+    backgroundColor: blue,
     padding: 10,
     paddingLeft: 30,
     paddingRight: 30,
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   submitBtnText: {
-    color: 'white',
+    color: white,
     fontSize: 20,
     textAlign: 'center',
   }
