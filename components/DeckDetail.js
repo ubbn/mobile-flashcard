@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import CustomButton from './UI/CustomButton'
 import { darkBlue, lightBlue, blue, white } from '../utils/colors'
+import { clearLocalNotif, setLocalNotif } from '../utils/notification'
 
 class DeckDetail extends React.Component {
   static navigationOptions = ({navigation}) => {
@@ -27,7 +28,11 @@ class DeckDetail extends React.Component {
           styleBtn={styles.button}
         />
         <CustomButton text={'Start Quiz'}
-          onPress={() => navigation.navigate('Quiz', {title})}
+          onPress={() => {
+            clearLocalNotif()
+              .then(setLocalNotif)
+            navigation.navigate('Quiz', {title})
+          }}
           styleBtn={[styles.button, styles.specialButton]}
           styleTxt={{color: blue}}
         />

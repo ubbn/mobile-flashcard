@@ -6,6 +6,7 @@ import { createStore } from 'redux'
 
 import reducer from './reducers'
 import { blue, white, darkBlue } from './utils/colors'
+import { setLocalNotif } from './utils/notification'
 import DeckList from './components/DeckLists'
 import NewDeck from './components/NewDeck'
 import DeckDetail from './components/DeckDetail'
@@ -66,6 +67,10 @@ const MainNavigator = StackNavigator({
 })
 
 export default class App extends Component {
+  componentDidMount(){
+    setLocalNotif()
+  }
+
   render() {
     return (
       <Provider store={createStore(reducer)}>
